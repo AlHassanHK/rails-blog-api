@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "80:80"
+    environment:
+      RAILS_MASTER_KEY: 9e9c5eb30f66f6f74b2f8ecd54d005c9
+    volumes:
+      - app-storage:/rails/storage
+      - .:/rails
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: myapp_db
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  pg_data: {}
+  app-storage: {}
