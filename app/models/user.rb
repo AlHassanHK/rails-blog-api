@@ -11,6 +11,8 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true
 
+  has_many :posts, dependent: :destroy
+
   def jwt_payload
     super
   end
