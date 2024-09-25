@@ -7,11 +7,14 @@ services:
       - "80:80"
     environment:
       RAILS_MASTER_KEY: 9e9c5eb30f66f6f74b2f8ecd54d005c9
+      REDIS_URL: redis://redis:6379/0
     volumes:
       - app-storage:/rails/storage
       - .:/rails
     depends_on:
       - db
+      - redis
+      - sidekiq
 
   db:
     image: postgres:latest
@@ -24,6 +27,20 @@ services:
     ports:
       - "5432:5432"
 
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq
+    depends_on:
+      - redis  
+    volumes:
+      - .:/rails
+    environment:
+      REDIS_URL: redis://redis:6379/0
 volumes:
   pg_data: {}
   app-storage: {}
