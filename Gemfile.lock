@@ -175,7 +175,7 @@ GEM
     json (2.7.2)
     jwt (2.9.1)
       base64
-    kamal (2.0.0.rc2)
+    kamal (2.0.0.rc3)
       activesupport (>= 7.0)
       base64 (~> 0.2)
       bcrypt_pbkdf (~> 1.0)
